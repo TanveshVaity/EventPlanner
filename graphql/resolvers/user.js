@@ -1,32 +1,54 @@
 const bcrypt = require("bcryptjs");
-const Bookings = require("../../models/bookings");
-const Event = require("../../models/event");
 const User = require("../../models/user");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
-    createUser: async (args) => {
-      const storedUser = await User.findOne({
+  createUser: async (args) => {
+    const storedUser = await User.findOne({
+      username: args.userInput.username,
+    });
+    if (storedUser) {
+      throw new Error("User already exists");
+    } else {
+      const password = await bcrypt.hash(args.userInput.password, 12);
+      const user = new User({
         username: args.userInput.username,
+        password: password,
       });
-      if (storedUser) {
-        throw new Error("User already exists");
-      } else {
-        const password = await bcrypt.hash(args.userInput.password, 12);
-        const user = new User({
-          username: args.userInput.username,
-          password: password,
-        });
-        try {
-          const result = await user.save();
-          return {
-            ...result._doc,
-            password: null,
-            _id: result.id,
-          };
-        } catch (err) {
-          console.error(err);
-          throw err;
-        }
+      try {
+        const result = await user.save();
+        return {
+          ...result._doc,
+          password: null,
+          _id: result.id,
+        };
+      } catch (err) {
+        console.error(err);
+        throw err;
       }
-    },  
+    }
+  },
+  login: async (email, password) => {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      throw new Error("User doesn't exist");
+    }
+
+    const passwordMatched = await bcrypt.compare(password, user.password);
+    if (!passwordMatched) {
+      throw new Error("Password is incorrect");
+    }
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+      },
+      "supersecretkey",
+      {
+        expiresIn: "1hr",
+      }
+    );
+    return{userId: user.id, token:token, tokenExpiration:1};
+  },
 };

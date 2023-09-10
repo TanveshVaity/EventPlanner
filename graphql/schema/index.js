@@ -24,6 +24,12 @@ const schema = buildSchema(`
         createdEvents: [Event!]
     }
 
+    type AuthData {
+        userId: String!
+        token: String!
+        tokenExpiration : Int!
+    }
+
     input EventInput {
         title: String!
         description: String!
@@ -39,6 +45,7 @@ const schema = buildSchema(`
     type Query {
         events: [Event!]!
         bookings: [Bookings!]
+        login(email: String!, password: String!): AuthData!
     }
 
     type Mutation {
