@@ -14,7 +14,10 @@ module.exports = {
       throw err;
     }
   },
-  bookEvent: async (args) => {
+  bookEvent: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     try {
       const fetchedEvent = await Event.findOne({ _id: args.eventId });
       if (!fetchedEvent) {
