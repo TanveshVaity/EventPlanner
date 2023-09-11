@@ -19,7 +19,7 @@ const schema = buildSchema(`
 
     type User {
         _id: ID!
-        username: String!
+        email: String!
         password: String
         createdEvents: [Event!]
     }
@@ -38,7 +38,7 @@ const schema = buildSchema(`
     }
 
     input UserInput {
-        username: String!
+        email: String!
         password: String!
     }
 

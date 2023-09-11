@@ -5,14 +5,14 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   createUser: async (args) => {
     const storedUser = await User.findOne({
-      username: args.userInput.username,
+      email: args.userInput.email,
     });
     if (storedUser) {
       throw new Error("User already exists");
     } else {
       const password = await bcrypt.hash(args.userInput.password, 12);
       const user = new User({
-        username: args.userInput.username,
+        email: args.userInput.email,
         password: password,
       });
       try {
@@ -28,17 +28,19 @@ module.exports = {
       }
     }
   },
-  login: async (email, password) => {
-    const user = await User.findOne({ email: email });
+  login: async ({ email, password }) => {
+    console.log(email, password)
+    const user = await User.findOne({email });
+    console.log(email) 
     if (!user) {
       throw new Error("User doesn't exist");
     }
-
+  
     const passwordMatched = await bcrypt.compare(password, user.password);
     if (!passwordMatched) {
       throw new Error("Password is incorrect");
     }
-
+  
     const token = jwt.sign(
       {
         userId: user.id,
@@ -49,6 +51,6 @@ module.exports = {
         expiresIn: "1hr",
       }
     );
-    return{userId: user.id, token:token, tokenExpiration:1};
-  },
+    return { userId: user.id, token, tokenExpiration: 1 };
+  },  
 };
