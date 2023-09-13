@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Auth from './pages/auth';
+import Auth from './pages/Auth/Auth';
 import Bookings from './pages/bookings';
 import Events from './pages/events';
 import Navbar from './components/Navbar/Navbar';

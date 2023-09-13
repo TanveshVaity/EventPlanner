@@ -4,7 +4,7 @@
     bottom: 0;
     width: 100%;
     height:3.5rem;
-    background-color: #84ceeb;
+    background-color: #25274d;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -19,7 +19,7 @@
 
 .main-nav-logo h1{
     font-size:2em;
-    color: #8860d0;
+    color: #aaabb8;
 }
 
 .main-nav-items ul {
@@ -44,7 +44,7 @@
  
 .main-nav-items a {
     text-decoration: none;
-    color: #8860d0;
+    color: #aaabb8;
 }
 
 .main-nav-items a:hover,
@@ -54,11 +54,11 @@
 
 .main-nav-items li:last-child:hover,
 .main-nav-items li:last-child:active {
-    background-color: #ffffff;
-    border-color: #ffffff;
+    background-color: #aaabb8;
+    border-color: #aaabb8;
 }
 
 .main-nav-items li:last-child:hover a,
 .main-nav-items li:last-child:active a {
-    color: #8860d0;
+    color: #25274d;
 }
