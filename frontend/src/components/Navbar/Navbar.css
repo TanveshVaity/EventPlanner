@@ -1,0 +1,46 @@
+.main-nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height:3.5rem;
+    background-color: #84ceeb;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    padding: 1rem 5%;
+}
+
+.main-nav-logo{
+    margin-left: 1rem;
+    margin-right: auto;
+}
+
+.main-nav-logo h1{
+    font-size:2em;
+    color: #8860d0;
+}
+
+.main-nav-items ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+  
+.main-nav-items li {
+    margin-right: 1rem;
+    transform: all 0.3s ease 0s;
+}
+  
+.main-nav-items a {
+    text-decoration: none;
+    color: #8860d0;
+}
+
+.main-nav-items a:hover,
+.main-nav-items a:active{
+    color: #ffffff;
+}
