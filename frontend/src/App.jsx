@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar/>
-      <main className="main-content">
+      <main>
         <Routes>
           <Route path="/" element={<Navigate to="/auth" />} />
           <Route path="/auth" element={<Auth />} />

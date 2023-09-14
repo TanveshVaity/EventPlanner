@@ -56,7 +56,7 @@ const Auth = () => {
           },
         }
       );
-      console.log(response.data)
+      console.log(response.data);
 
       emailInput.current.value = "";
       passwordInput.current.value = "";
@@ -66,22 +66,31 @@ const Auth = () => {
   };
 
   return (
-    <form className="auth-form" onSubmit={submitHandler}>
-      <div className="form-control">
-        <label htmlFor="email">Email</label>
-        <input type="text" id="email" ref={emailInput} />
-      </div>
-      <div className="form-control">
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" ref={passwordInput} />
-      </div>
-      <div className="form-actions">
-        <button type="submit">{isLogin ? "Login" : "Signup"}</button>
-        <button type="button" onClick={switchModeHandler}>
-          Switch to {isLogin ? "Signup" : "Login"}
-        </button>
-      </div>
-    </form>
+    <div className="auth-container">
+        <form className="auth-form" onSubmit={submitHandler}>
+            <h2>{isLogin ? "Login" : "Signup"}</h2>
+            <div className="form-control">
+                <label htmlFor="email">Email</label>
+                <input type="text" id="email" ref={emailInput} />
+            </div>
+            <div className="form-control">
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" ref={passwordInput} />
+            </div>
+            <button type="submit">{isLogin ? "Login" : "Signup"}</button>
+            <div className="form-actions">
+                <p>
+                    {isLogin
+                        ? "Don't you have an account? "
+                        : "Already have an account? "}
+                    <button type="button" onClick={switchModeHandler}>
+                        {isLogin ? "Signup" : "Login"}
+                    </button>
+                </p>
+            </div>
+        </form>
+    </div>
+
   );
 };
 

@@ -1,42 +1,89 @@
-.auth-form {
-    width: 25rem;
-    max-width: 80%;
-    margin: 5rem auto;
+.auth-container {
+    background-color: #25274d;
+    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(80vh - 3.5rem);
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-.form-control label,
-.form-control input {
-    width: 100%;
-    display: block;
+.auth-form {
+    background-color: #464866;
+    width: 25rem;
+    max-width: 80%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
 }
 
-.form-control label {
-    margin-bottom: 0.5rem;
+.auth-form h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #aaabb8;
 }
 
 .form-control {
+    width: 100%;
     margin-bottom: 1rem;
 }
 
-.form-actions button {
-    background: #01d1d1;
-    font: inherit;
-    border: 1px solid #01d1d1;
-    border-radius: 3px;
-    padding: 0.25rem 1rem;
-    margin-right: 1rem;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
-    color: white;
-    cursor: pointer;
+.form-control label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    color: #aaabb8;
+    text-align: left;
 }
 
-.form-actions button:hover,
-.form-actions button:active {
-    background: #01a7a7;
-    border-color: #01a7a7;
+.form-control input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 16px;
+    border: 1px solid #2e9cca;
+    border-radius: 10px;
+}
+
+button[type="submit"] {
+    background: #29648a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background: #2e9cca;
+}
+
+.form-actions {
+    font-size: 1em;
+    color: #aaabb8;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.form-actions button {
+    background: none;
+    border: none;
+    color: #2e9cca;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.form-actions button:hover {
+    text-decoration: none;
 }
