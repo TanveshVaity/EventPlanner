@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const graphqlSchema = require("./graphql/schema/index");
 const graphqlResolvers = require("./graphql/resolvers/index");
 const isAuth = require("./middleware/isAuth");
+const cors = require("cors");
 
 const app = express();
 const port = 5000;
@@ -23,7 +24,7 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
-
+app.use(cors());
 app.use(isAuth);
 app.use(
   "/api",
