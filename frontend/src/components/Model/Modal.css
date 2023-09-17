@@ -1,0 +1,81 @@
+.modal-container {
+    background-color: transparent; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3; 
+}
+
+.modal {
+    background-color: #464866;
+    width: 25rem;
+    max-width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 4; 
+}
+
+.modal h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #aaabb8;
+}
+
+.modal-content {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.modal-content label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    color: #aaabb8;
+    text-align: left;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 16px;
+    border: 1px solid #2e9cca;
+    border-radius: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between; 
+    font-size: 1em;
+    color: #aaabb8;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.modal-actions button {
+    background: #29648a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 18px;
+    cursor: pointer;
+    width: 48%;
+}
+
+.modal-actions button:hover {
+    text-decoration: none;
+    background: #2e9cca;
+}

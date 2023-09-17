@@ -63,7 +63,7 @@
     bottom: 0;
     left: 0;
     width: 0;
-    height: 2px;
+    height: 3px;
     background-color: #aaabb8;
     transition: width 0.3s;
 }
@@ -82,15 +82,11 @@
 }
 
 .main-nav-items li:last-child:hover a ,
-.main-nav-items li:last-child:active a{
-    color: #25274d;
-}
-
+.main-nav-items li:last-child:active a,
 .main-nav-items li:last-child:hover button ,
 .main-nav-items li:last-child:active button{
     color: #25274d;
 }
-
 
 .main-nav-items li:not(:last-child):hover:before,
 .main-nav-items li:not(:last-child):active:before {
