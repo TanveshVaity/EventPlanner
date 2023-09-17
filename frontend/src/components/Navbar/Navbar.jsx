@@ -4,7 +4,7 @@ import "./Navbar.css";
 import AuthContext  from "../../context/auth-context"; 
 
 const Navbar = () => {
-    const { token } = useContext(AuthContext);
+    const { token , logout} = useContext(AuthContext);
   
     return (
       <header className="main-nav">
@@ -24,6 +24,11 @@ const Navbar = () => {
             {!token && (
               <li>
                 <NavLink to="/auth">Authenticate</NavLink>
+              </li>
+            )}
+            {token && (
+              <li>
+                <button onClick={logout}>Log Out</button>
               </li>
             )}
           </ul>

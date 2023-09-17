@@ -10,7 +10,6 @@
     justify-content: flex-end;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     padding: 1rem 5%;
-    margin: 1.5rem 2.5rem;
 }
 
 .main-nav-logo {
@@ -35,6 +34,16 @@
     margin-right: 2rem;
     position: relative;
 }
+
+.main-nav-items li button{
+    background-color: transparent;
+    border: none;
+    color: #aaabb8;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+}
+
 
 .main-nav-items li:not(:last-child) {
     border-bottom: 2px solid transparent;
@@ -72,10 +81,16 @@
     border-color: #aaabb8;
 }
 
-.main-nav-items li:last-child:hover a,
-.main-nav-items li:last-child:active a {
+.main-nav-items li:last-child:hover a ,
+.main-nav-items li:last-child:active a{
     color: #25274d;
 }
+
+.main-nav-items li:last-child:hover button ,
+.main-nav-items li:last-child:active button{
+    color: #25274d;
+}
+
 
 .main-nav-items li:not(:last-child):hover:before,
 .main-nav-items li:not(:last-child):active:before {

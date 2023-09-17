@@ -1,0 +1,12 @@
+.event-container {
+    background-color: #25274d;
+    height: calc(100vh - 3.5rem); 
+    width: 100%;
+    margin-top: 3.5rem;
+}
+
+.event-container h1{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 2rem;
+    color: #aaabb8;
+}
