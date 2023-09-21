@@ -167,21 +167,24 @@ const Events = () => {
           </form>
         </Modal>
       )}
-      {token && (
-        <div className="events-container">
-          <div className="events-control">
-            <p>Share your own Events!</p>
-            <button className="btn" onClick={startCreateEventHandler}>
-              Create Event
-            </button>
-          </div>
+      <div className="events-container">
+        {token && (<div className="events-control">
+          <p>Share your own Events!</p>
+          <button className="btn" onClick={startCreateEventHandler}>
+            Create Event
+          </button>
+        </div>)}
+        <div className="events-list">
+          {events.map((event) => (
+            <div className="events-list-card" key={event._id}>
+              <h1>{event.title}</h1>
+              <h3>{event.description}</h3>
+              <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+              <p>Price: ${event.price}</p>
+            </div>
+          ))}
         </div>
-      )}
-      <ul className="events-list">
-        {events.map((event) => (
-          <li key={event._id}>{event.title}</li>
-        ))}
-      </ul>
+      </div>
     </React.Fragment>
   );
 };
