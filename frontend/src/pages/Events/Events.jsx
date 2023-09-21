@@ -1,17 +1,23 @@
-import React, { useRef, useState , useContext} from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import Backdrop from "../../components/Backdrop/Backdrop";
-import Modal from "../../components/Model/Modal";
+import Modal from "../../components/Modal/Modal";
 import "./Events.css";
 import axios from "axios";
 import AuthContext from "../../context/auth-context";
 
 const Events = () => {
   const [creating, setCreating] = useState(false);
+  const [events, setEvents] = useState([]);
   const authContext = useContext(AuthContext);
   const titleInput = useRef();
   const descriptionInput = useRef();
   const priceInput = useRef();
   const dateInput = useRef();
+  const { token } = authContext;
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const startCreateEventHandler = () => {
     setCreating(true);
@@ -24,12 +30,7 @@ const Events = () => {
     const price = +priceInput.current.value;
     const date = dateInput.current.value;
 
-    if (
-      title.trim().length === 0 ||
-      description.trim().length === 0 ||
-      date.trim().length === 0 ||
-      price <= 0
-    ) {
+    if (!title || !description || !date || price <= 0) {
       return;
     }
 
@@ -41,29 +42,39 @@ const Events = () => {
     priceInput.current.value = "";
     dateInput.current.value = "";
 
-    let requestBody = {
+    const requestBody = {
       query: `
-        mutation {
-          createEvent(eventInput:{title:"${title}", description:"${description}", price:${price}, date:"${date}"}){
-            _id,
-            title,
-            description,
-            price,
-            date,
-            creator{
-              _id,
+        mutation CreateEvent($title: String!, $description: String!, $price: Float!, $date: String!) {
+          createEvent(eventInput: {
+            title: $title,
+            description: $description,
+            price: $price,
+            date: $date
+          }) {
+            _id
+            title
+            description
+            price
+            date
+            creator {
+              _id
               email
             }
           }
         }
       `,
+      variables: {
+        title,
+        description,
+        price,
+        date,
+      },
     };
 
     try {
-      const { token } = authContext;
       const response = await axios.post(
         "http://localhost:5000/api",
-        requestBody,
+        JSON.stringify(requestBody),
         {
           headers: {
             "Content-Type": "application/json",
@@ -75,8 +86,47 @@ const Events = () => {
       const resData = await response.data;
       if (resData.data.createEvent) {
         console.log(resData);
+        fetchEvents();
       }
-      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchEvents = async () => {
+    const requestBody = {
+      query: `
+        query {
+          events {
+            _id
+            title
+            description
+            price
+            date
+            creator {
+              _id
+              email
+            }
+          }
+        }
+      `,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api",
+        JSON.stringify(requestBody),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const resData = await response.data;
+      if (resData.data.events) {
+        setEvents(resData.data.events);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -117,14 +167,21 @@ const Events = () => {
           </form>
         </Modal>
       )}
-      <div className="events-container">
-        <div className="events-control">
-          <p>Share your own Events!</p>
-          <button className="btn" onClick={startCreateEventHandler}>
-            Create Event
-          </button>
+      {token && (
+        <div className="events-container">
+          <div className="events-control">
+            <p>Share your own Events!</p>
+            <button className="btn" onClick={startCreateEventHandler}>
+              Create Event
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+      <ul className="events-list">
+        {events.map((event) => (
+          <li key={event._id}>{event.title}</li>
+        ))}
+      </ul>
     </React.Fragment>
   );
 };
