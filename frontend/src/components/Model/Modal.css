@@ -74,9 +74,31 @@
     font-size: 18px;
     cursor: pointer;
     width: 48%;
+    margin-left: 20px;
 }
 
-.modal-actions button:hover {
+.modal-actions button:hover,
+.modal-actions button:active {
     text-decoration: none;
     background: #2e9cca;
+}
+
+.modal-actions button.cancel-btn {
+    background: #ffffff;
+    color: #29648a; 
+    border-color: #29648a;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 18px;
+    cursor: pointer;
+    width: 48%;
+    margin-right: 20px;
+}
+
+.modal-actions button.cancel-btn:hover,
+.modal-actions button.cancel-btn:active {
+    background: #2e9cca;
+    border-color: #2e9cca;
+    color: #ffffff;
+
 }

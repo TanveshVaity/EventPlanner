@@ -49,3 +49,20 @@
 .events-control .btn:hover {
     background: #2e9cca;
 }
+
+.form-control label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    color: #aaabb8;
+    text-align: left;
+}
+
+.form-control input,
+.form-control textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 16px;
+    border: 1px solid #2e9cca;
+    border-radius: 10px;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useRef ,useContext} from "react";
-import Axios from "axios";
+import axios from "axios";
 import "./Auth.css";
 import AuthContext from "../../context/auth-context";
 
@@ -49,7 +49,7 @@ const Auth = () => {
     }
 
     try {
-      const response = await Axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api",
         requestBody,
         {
