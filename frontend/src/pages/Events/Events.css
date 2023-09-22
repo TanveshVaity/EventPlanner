@@ -8,6 +8,11 @@
     justify-content: flex-start;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     padding-top: 8rem;
+    overflow: auto;
+    z-index: 0;
+}
+.events-container::-webkit-scrollbar {
+    width: 0;
 }
 
 .events-control {
@@ -25,6 +30,7 @@
     text-align: center;
     position: relative;
     z-index: 1;
+    margin-bottom: 20px;
 }
 
 .events-control p {
@@ -67,48 +73,10 @@
 }
 
 .events-list {
-    width: 300px;
     display: flex;
-    flex-wrap: wrap;  
-    justify-content: space-between; 
-    gap: 20px; 
-    max-height: 400px;
-}
-  
-.events-list-card {
-    border: 5px solid #ffffff;
-    background-color: #464866;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
-    padding: 20px;
-    margin-top: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-    color: #fff;
-}
-
-.events-list-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
-}
-
-.events-list-card h1 {
-    text-transform: uppercase;
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: #AAABB8; 
-}
-
-.events-list-card h3 {
-    font-size: 16px;
-    font-weight: 400;
-    color: #fff;
-    margin: 40px 0;
-    line-height: 20px;
-}
-
-.events-list-card p {
-    font-size: 16px;
-    color: #aaabb8; 
-    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-height: 400px; 
+    overflow-y: auto;
+    padding: 0 20px;
 }

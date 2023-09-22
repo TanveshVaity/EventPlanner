@@ -1,0 +1,44 @@
+.events-list-item {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #fff;
+    background-color: #464866;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.events-list-item h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #AAABB8;
+}
+  
+.events-list-item h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: #aaabb8;
+}
+  
+.events-list-item p {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.events-list-item .btn{
+    background: #29648a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.events-list-item .btn:hover {
+    background: #2e9cca;
+}

@@ -4,16 +4,20 @@ import Modal from "../../components/Modal/Modal";
 import "./Events.css";
 import axios from "axios";
 import AuthContext from "../../context/auth-context";
+import EventList from "../../components/EventList/EventList";
+import Loader from "../../components/Loader/Loader";
 
-const Events = () => {
+const Events = (props) => {
   const [creating, setCreating] = useState(false);
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState();
   const authContext = useContext(AuthContext);
   const titleInput = useRef();
   const descriptionInput = useRef();
   const priceInput = useRef();
   const dateInput = useRef();
-  const { token } = authContext;
+  const { token, userId } = authContext;
 
   useEffect(() => {
     fetchEvents();
@@ -35,7 +39,6 @@ const Events = () => {
     }
 
     const event = { title, description, price, date };
-    console.log(event);
 
     titleInput.current.value = "";
     descriptionInput.current.value = "";
@@ -85,8 +88,15 @@ const Events = () => {
 
       const resData = await response.data;
       if (resData.data.createEvent) {
-        console.log(resData);
         fetchEvents();
+        const createdEvent = resData.data.createEvent;
+        setEvents((prevEvents) => [
+          ...prevEvents,
+          {
+            ...createdEvent,
+            creator: { _id: userId },
+          },
+        ]);
       }
     } catch (error) {
       console.error(error);
@@ -94,6 +104,7 @@ const Events = () => {
   };
 
   const fetchEvents = async () => {
+    setIsLoading(true);
     const requestBody = {
       query: `
         query {
@@ -126,9 +137,11 @@ const Events = () => {
       const resData = await response.data;
       if (resData.data.events) {
         setEvents(resData.data.events);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -136,9 +149,16 @@ const Events = () => {
     setCreating(false);
   };
 
+  const showDetailHandler = (eventId) => {
+    const event = events.find((e) => e._id === eventId);
+    setSelectedEvent(event);
+  };
+
+  const bookEventHandler = () => {};
+
   return (
     <React.Fragment>
-      {creating && <Backdrop />}
+      {creating || (selectedEvent && <Backdrop />)}
       {creating && (
         <Modal
           title="Add Event"
@@ -146,6 +166,7 @@ const Events = () => {
           canConfirm
           onCancel={modalCancelHandler}
           onConfirm={modalConfirmHandler}
+          confirmText="Confirm"
         >
           <form>
             <div className="form-control">
@@ -167,23 +188,42 @@ const Events = () => {
           </form>
         </Modal>
       )}
+      {selectedEvent && (
+        <Modal
+          title={selectedEvent.title}
+          canCancel
+          canConfirm
+          onCancel={() => setSelectedEvent(null)}
+          onConfirm={bookEventHandler}
+          confirmText="Book"
+        >
+          <h1>{selectedEvent.title}</h1>
+          <h2>
+            ${selectedEvent.price} -{" "}
+            {new Date(selectedEvent.date).toLocaleDateString()}
+          </h2>
+          <p>{selectedEvent.description}</p>
+        </Modal>
+      )}
+
       <div className="events-container">
-        {token && (<div className="events-control">
-          <p>Share your own Events!</p>
-          <button className="btn" onClick={startCreateEventHandler}>
-            Create Event
-          </button>
-        </div>)}
-        <div className="events-list">
-          {events.map((event) => (
-            <div className="events-list-card" key={event._id}>
-              <h1>{event.title}</h1>
-              <h3>{event.description}</h3>
-              <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-              <p>Price: ${event.price}</p>
-            </div>
-          ))}
-        </div>
+        {token && (
+          <div className="events-control">
+            <p>Share your own Events!</p>
+            <button className="btn" onClick={startCreateEventHandler}>
+              Create Event
+            </button>
+          </div>
+        )}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <EventList
+            events={events}
+            authUserId={userId}
+            onViewDetail={showDetailHandler}
+          />
+        )}
       </div>
     </React.Fragment>
   );

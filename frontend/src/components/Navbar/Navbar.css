@@ -10,6 +10,7 @@
     justify-content: flex-end;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     padding: 1rem 5%;
+    z-index: 2;
 }
 
 .main-nav-logo {

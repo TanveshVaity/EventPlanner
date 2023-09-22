@@ -1,7 +1,7 @@
 import React from 'react';
 import './Modal.css';
 
-const Modal = props => (
+const Modal = (props) => (
   <div className="modal-container">
     <div className="modal">
       <header className="modal-header">
@@ -16,7 +16,7 @@ const Modal = props => (
         )}
         {props.canConfirm && (
           <button className="btn" onClick={props.onConfirm}>
-            Confirm
+            {props.confirmText}
           </button>
         )}
       </section>
