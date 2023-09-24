@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Loader from '../components/Loader/Loader';
-import AuthContext from '../context/auth-context';
-import BookingsList from '../components/BookingsList/BookingsList';
+import Loader from '../../components/Loader/Loader';
+import AuthContext from '../../context/auth-context';
+import BookingsList from '../../components/BookingsList/BookingsList';
 import axios from 'axios'; 
+import "./Bookings.css";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]); 
@@ -107,11 +108,11 @@ const Bookings = () => {
   
 
   return (
-    <div style={{ marginTop: '80px', padding: '20px' }}>
+    <div className="bookings-container">
       {isLoading ? (
         <Loader />
       ) : bookings.length === 0 ? (
-        <p>No bookings available.</p>
+        <p className="no-bookings-message">No bookings available.</p>
       ) : (
         <BookingsList bookings={bookings} onDelete={cancelBookingHandler} />
       )}

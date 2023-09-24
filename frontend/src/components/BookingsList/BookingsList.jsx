@@ -5,16 +5,16 @@ const BookingsList = (props) => {
   return (
     <ul className="bookings-list">
       {props.bookings.map((booking) => (
-        <li key={booking._id} className="booking-item">
-          <div className="booking-details">
-            <span className="booking-title">{booking.event.title}</span>
-            <span className="booking-date">
+        <li key={booking._id} className="bookings-item">
+          <div className="bookings-item-data">
+            <h1>{booking.event.title}</h1>
+            <h2>
               {new Date(booking.createdAt).toLocaleDateString()}
-            </span>
+            </h2>
           </div>
-          <div className="booking-actions">
+          <div className="bookings-items-actions">
             <button
-              className="cancel-button"
+              className="btn"
               onClick={() => props.onDelete(booking._id)} 
             >
               Cancel

@@ -1,0 +1,25 @@
+.bookings-container{
+    background-color: #25274d;
+    width: 100%;
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    padding-top: 8rem;
+    overflow: auto;
+    z-index: 0;
+}
+
+.bookings-container::-webkit-scrollbar {
+    width: 0;
+}
+
+.no-bookings-message {
+  font-size: 1.5rem;
+  color: #AAABB8;
+  margin: 1rem 0;
+  text-align: center;
+}
+
