@@ -3,7 +3,10 @@ const Bookings = require("../../models/bookings");
 const Event = require("../../models/event");
 
 module.exports = {
-  bookings: async () => {
+  bookings: async (args,req) => {
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated!');
+    }
     try {
       const bookings = await Bookings.find();
       return bookings.map((booking) => {

@@ -47,12 +47,12 @@ const Events = (props) => {
 
     const requestBody = {
       query: `
-        mutation CreateEvent($title: String!, $description: String!, $price: Float!, $date: String!) {
+        mutation {
           createEvent(eventInput: {
-            title: $title,
-            description: $description,
-            price: $price,
-            date: $date
+            title: "${title}",
+            description: "${description}",
+            price: ${price},
+            date: "${date}"
           }) {
             _id
             title
@@ -66,12 +66,6 @@ const Events = (props) => {
           }
         }
       `,
-      variables: {
-        title,
-        description,
-        price,
-        date,
-      },
     };
 
     try {
@@ -154,7 +148,42 @@ const Events = (props) => {
     setSelectedEvent(event);
   };
 
-  const bookEventHandler = () => {};
+  const bookEventHandler = async() =>{
+    if (!token) {
+      return;
+    }
+    console.log("Booking event with ID:", selectedEvent._id);
+    const requestBody = {
+      query: `
+        mutation {
+          bookEvent(eventId: "${selectedEvent._id}"){
+            _id,
+            createdAt,
+            updatedAt
+          }
+        }
+      `,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api",
+        JSON.stringify(requestBody),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          
+        }
+      );
+
+      const resData = await response.data;
+      setSelectedEvent(null);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -195,7 +224,7 @@ const Events = (props) => {
           canConfirm
           onCancel={() => setSelectedEvent(null)}
           onConfirm={bookEventHandler}
-          confirmText="Book"
+          confirmText={token ? "Book" : "Confirm"}
         >
           <h1>{selectedEvent.title}</h1>
           <h2>
