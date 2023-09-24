@@ -61,11 +61,11 @@ const Bookings = () => {
   }, [token]); 
 
   return (
-    <>
+    <div style={{ marginTop: '80px', padding: '20px' }}>
       {isLoading ? (
         <Loader />
       ) : (
-        <ul>
+        <ul className="bookings">
           {bookings.map((booking) => (
             <li key={booking._id}>
               {booking.event.title} -{' '}
@@ -74,7 +74,7 @@ const Bookings = () => {
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 };
 
