@@ -1,14 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Loader from '../components/Loader/Loader';
 import AuthContext from '../context/auth-context';
-import axios from 'axios'; // Import axios
+import BookingsList from '../components/BookingsList/BookingsList';
+import axios from 'axios'; 
 
 const Bookings = () => {
-  const [bookings, setBookings] = useState([]); // Initialize bookings state
-  const [isLoading, setIsLoading] = useState(true); // Set initial loading state to true
+  const [bookings, setBookings] = useState([]); 
+  const [isLoading, setIsLoading] = useState(true); 
   const authContext = useContext(AuthContext);
 
   const { token } = authContext;
+
+  useEffect(() => {
+    fetchBookings();
+  }, [token]); 
+
 
   const fetchBookings = async () => {
     try {
@@ -32,7 +38,7 @@ const Bookings = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:5000/api', // Use the correct URL
+        'http://localhost:5000/api', 
         JSON.stringify(requestBody),
         {
           headers: {
@@ -43,36 +49,71 @@ const Bookings = () => {
       );
 
       const resData = response.data;
-      console.log(resData);
 
       if (resData.data && resData.data.bookings) {
         setBookings(resData.data.bookings);
       }
       
-      setIsLoading(false); // Set loading to false after data is fetched
+      setIsLoading(false); 
     } catch (error) {
       console.error('Error fetching bookings:', error);
-      setIsLoading(false); // Set loading to false in case of an error
+      setIsLoading(false); 
     }
   };
 
-  useEffect(() => {
-    fetchBookings();
-  }, [token]); 
+  const cancelBookingHandler = async (bookingId) => {
+    try {
+      setIsLoading(true);
+      const requestBody = {
+        query: `
+          mutation CancelBooking($bookingId: ID!) {
+            cancelBooking(bookingId: $bookingId) {
+              _id
+            }
+          }
+        `,
+        variables: {
+          bookingId: bookingId,
+        },
+      };
+  
+      const response = await axios.post(
+        'http://localhost:5000/api',
+        JSON.stringify(requestBody),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      const resData = response.data;
+  
+      if (resData.data && resData.data.cancelBooking) {
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking._id !== bookingId)
+        );
+      } else {
+        console.error('Error canceling booking:', resData.errors);
+      }
+    } catch (error) {
+      console.error('Error canceling booking:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  
 
   return (
     <div style={{ marginTop: '80px', padding: '20px' }}>
       {isLoading ? (
         <Loader />
+      ) : bookings.length === 0 ? (
+        <p>No bookings available.</p>
       ) : (
-        <ul className="bookings">
-          {bookings.map((booking) => (
-            <li key={booking._id}>
-              {booking.event.title} -{' '}
-              {new Date(booking.createdAt).toLocaleDateString()}
-            </li>
-          ))}
-        </ul>
+        <BookingsList bookings={bookings} onDelete={cancelBookingHandler} />
       )}
     </div>
   );
