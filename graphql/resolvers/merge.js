@@ -1,17 +1,26 @@
 const Bookings = require("../../models/bookings");
 const Event = require("../../models/event");
 const User = require("../../models/user");
+const DataLoader = require("dataloader");
+
+const eventLoader = new DataLoader((eventIds) => {
+  return events(eventIds);
+});
+
+const userLoader = new DataLoader(userIds => {
+  return User.find({_id: {$in: userIds}});
+});
 
 const user = async (userId) => {
     try {
-      const userData = await User.findById(userId);
+      const userData = await userLoader.load(userId.toString());
       if (!userData) {
         throw new Error("User not found for ID: " + userId);
       }
       return {
         ...userData._doc,
         id: userData.id,
-        createdEvents: events.bind(this, userData._doc.createdEvents),
+        createdEvents:  eventLoader.load.bind(this, userData._doc.createdEvents),
       };
     } catch (error) {
       console.error(error);
@@ -31,12 +40,8 @@ const user = async (userId) => {
   
   const singleEvent = async(eventId) =>{
       try{
-          const event  = await Event.findById(eventId);
-          return {
-              ...event._doc,
-              _id : eventId,
-              creator: user.bind(this, event.creator)
-          }
+          const event  = await eventLoader.load(eventId.toString());
+          return event;
       }catch(err){
           throw err;
       }
