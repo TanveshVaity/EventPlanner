@@ -1,13 +1,15 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
-import Backdrop from "../../components/Backdrop/Backdrop";
-import Modal from "../../components/Modal/Modal";
-import "./Events.css";
 import axios from "axios";
 import AuthContext from "../../context/auth-context";
+import Backdrop from "../../components/Backdrop/Backdrop";
+import Modal from "../../components/Modal/Modal";
 import EventList from "../../components/EventList/EventList";
 import Loader from "../../components/Loader/Loader";
+import "./Events.css";
 
-const Events = (props) => {
+
+
+const Events = () => {
   const [creating, setCreating] = useState(false);
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,12 +49,12 @@ const Events = (props) => {
 
     const requestBody = {
       query: `
-        mutation {
+        mutation CreateEvent($title: String!, $description: String!, $price: Float!, $date: String!) {
           createEvent(eventInput: {
-            title: "${title}",
-            description: "${description}",
-            price: ${price},
-            date: "${date}"
+            title: $title,
+            description: $description,
+            price: $price,
+            date: $date
           }) {
             _id
             title
@@ -66,7 +68,14 @@ const Events = (props) => {
           }
         }
       `,
+      variables: {
+        title: title,
+        description: description,
+        price: price,
+        date: date
+      },
     };
+    
 
     try {
       const response = await axios.post(
@@ -152,18 +161,21 @@ const Events = (props) => {
     if (!token) {
       return;
     }
-    console.log("Booking event with ID:", selectedEvent._id);
     const requestBody = {
       query: `
-        mutation {
-          bookEvent(eventId: "${selectedEvent._id}"){
-            _id,
-            createdAt,
+        mutation BookEvent($eventId: ID!) {
+          bookEvent(eventId: $eventId) {
+            _id
+            createdAt
             updatedAt
           }
         }
       `,
+      variables: {
+        eventId: selectedEvent._id,
+      },
     };
+    
 
     try {
       const response = await axios.post(

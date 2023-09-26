@@ -39,7 +39,7 @@ const Bookings = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:5000/api', 
+        "http://localhost:5000/api", 
         JSON.stringify(requestBody),
         {
           headers: {
@@ -79,7 +79,7 @@ const Bookings = () => {
       };
   
       const response = await axios.post(
-        'http://localhost:5000/api',
+        "http://localhost:5000/api",
         JSON.stringify(requestBody),
         {
           headers: {
